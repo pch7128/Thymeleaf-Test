@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사원 추가</title>
+<script 
+	src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+	function addEmp(){
+		
+		var empdata=$('#addForm').serialize();
+		
+		$.ajax({
+			url:'/thcrud/emp/input',
+			type:'post',
+			cache:false,
+			data: empdata,
+			dataType:'json',
+			success:function(res){
+				alert(res.added ? '사원 추가 성공':'실패');
+				location.href='/thcrud/emp/detail?empno=' + res.empno;
+			},
+			error:function(xhr, status, err){
+				alert(err);
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<form id="addForm" method="post">
+		<div><label>사원번호</label><input type="text" name="empno"></div>
+		<div><label>사원명</label><input type="text" name="ename"></div>
+		<div><label>급여</label><input type="text" name="sal"></div>
+		<div><label>고용일</label><input type="date" name="hiredate"></div>
+		<div>
+			<button type="button" onclick="addEmp()">추가</button>
+		</div>
+	</form>
+
+</body>
+</html>

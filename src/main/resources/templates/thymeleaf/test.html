@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	span:nth-child(1) {
+	color: navy;
+}
+	span:nth-child(2) {
+	color:orange;
+}
+	span:nth-child(3) {
+	color: purple; 
+}
+</style>
+</head>
+<body>
+<div th:text="${data}"></div>
+<div>[[${data}]]</div>
+<p>
+
+<div th:each="name, status:${list}" >
+	[[${status.index}+1]].[[${name}]]
+</div>
+
+<p>
+
+<div th:each="emp:${emps}">
+	<span th:text="${emp.empno}"></span>
+	<!-- <a th:href="${'/th/detail/'+emp.empno}" th:text="${emp.ename}"></a> -->
+	<a th:href="@{/th/detail(empno=${emp.empno})}" th:text="${emp.ename}"></a>
+	<span th:text="${#dates.format(emp.hiredate,'yyyy-MM-dd')}"></span>
+</div>
+<p>
+<div> 총계 : <input type="text" name="total" th:value="1+2"></div>
+<div th:text="true ? 'a':'b'"></div>
+
+<div th:if="${empno==7369}">Smith</div>
+
+<div th:unless="${empno==7369}">Smith 아님</div>
+
+<div th:switch="${day}">
+	<span th:case="1">일요일</span>
+	<span th:case="2">월요일</span>
+	<span th:case="3">화요일</span>
+</div>
+
+<div th:text="배열의 원소 수:'+${arr.length}"></div>
+<div th:text="배열의 원소의 값:'+${arr[0]}"></div>
+
+<div th:each="u : users">
+	<span th:text="${u.key}"></span> : <span th:text="${u.value}"></span>
+</div>
+
+[[${param.empno}]]
+[[${session.userid}]]
+[[${emp.empno}]]
+
+<div th:text="${#number.formatInteger(emp.sal, 1) + '원'}"></div>
+
+
+
+<p>
+<!--${var} : Variable Expression -->
+
+<!-- URL Expression, @{ url... } -->
+<div>1. <a href="/th/test/[['hello']]">[['hello']]</a></div>
+<div>2. <a href="/th/test/${'hello'}">[['hello']]</a></div>
+<div>3. <a href="'/th/test/'+${'hello'}">[['hello']]</a></div>
+<!--<a th:href="/th/test/${'hello'}">[['hello']]</a>-->
+<div>4. <a th:href="${'/th/test/'+'hello'}">[['hello']]</a></div>
+<div>5. <a th:href="@{/th/test/hello}">[['hello']]</a></div>
+<div>6. <a th:href="@{'/th/test/'+${'hello'}}">[['hello']]</a></div>
+<div>7. <a th:href="@{test/hello}">[['hello']]</a></div>
+<div>8. <a th:href="@{/board/list(pageNum=${pageNum}, size=5) }">@ 링크(파라미터)</div>
+
+</body>
+</html>

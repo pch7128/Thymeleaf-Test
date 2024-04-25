@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사원 목록</title>
+</head>
+<body>
+	<table>
+		<tr><th>사번</th><th>사원명</th></tr>
+		<tr th:each="e : ${elist}">
+			<td>[[${e.empno}]]</td>
+			<td><a th:href="@{/thcrud/emp/detail(empno=${e.empno})}">[[${e.ename}]]</a></td>
+		</tr>
+	</table>
+	<div>
+		<a href="/thcrud/emp/input"><button type="button">사원 추가</button></a>
+	</div>
+</body>
+</html>

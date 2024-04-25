@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>사원 정보 수정</title>
+<script 
+	src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+
+	function empEdit(){
+		var editEmp=$('#editForm').serialize();
+		
+		$.ajax({
+			url:'/thcrud/emp/update',
+			type:'post',
+			cache:false,
+			data: editEmp,
+			dataType:'json',
+			success:function(res){
+				alert(res.edit ? '수정 성공':'실패');
+				location.href='/thcrud/emp/detail?empno=' + res.empno;
+			},
+			error:function(xhr, status, err){
+				alert(err);
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<form id="editForm" method="post">
+		<div><label>사번</label><input type="hidden" name="empno" th:value="${e.empno}">[[${e.empno}]]</div>
+		<div><label>사원명</label><input type="text" name="ename" th:value="${e.ename}"></div>
+		<div><label>급여</label><input type="text" name="sal" th:value="${e.sal}"></div>
+		<div><label>고용일</label><input type="hidden" name="hiredate" th:value="${e.hiredate}">[[${e.hiredate}]]</div>
+	</form>
+	<div>
+		<button type="button" onclick="empEdit()">수정</button>
+	</div>
+</body>
+</html>
